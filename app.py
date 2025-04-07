@@ -33,7 +33,7 @@ def rag_qa(question, chunks):
     return best_chunk.strip()[:500] + "..."
 
 # ----------- Load PDF Once -----------
-pdf_path = r"C:\Users\ralla\Desktop\New folder\test.pdf"
+pdf_path = r"test.pdf"
 full_text = extract_text_from_pdf(pdf_path)
 chunks = split_text(full_text)
 
