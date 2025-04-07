@@ -93,11 +93,20 @@ chunks = split_text(full_text)
 
 
 # ----------- API Route -----------
-@app.route('/ask', methods=['POST'])
+
+@app.route("/ask", methods=["POST"])
 def ask():
-    question = request.form['question']
-    print("Received question:", question)
-    return jsonify({'answer': f"You asked about: {question}"})
+    question = request.form["question"]
+    pdf = request.files["pdf"]
+    
+    # Save and process the uploaded PDF
+    pdf_path = "uploaded.pdf"
+    pdf.save(pdf_path)
+
+    # Extract text AFTER uploading
+    full_text = extract_text_from_pdf(pdf_path)
+    chunks = split_text(full_text)
+    ...
 
 
 if __name__ == '__main__':
