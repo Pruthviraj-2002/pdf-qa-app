@@ -18,9 +18,17 @@ def home():
 
 
 # ----------- PDF Processing ----------
-
+import fitz  # PyMuPDF
 def extract_text_from_pdf(pdf_path):
-    doc = fitz.open(pdf_path)  # ✅ Correct for a string path
+    try:
+        doc = fitz.open(pdf_path)
+        text = ""
+        for page in doc:
+            text += page.get_text()
+        return text if text.strip() else ""  # return empty string if no text found
+    except Exception as e:
+        print(f"Error extracting text: {e}")
+        return ""
 
 def split_text(text, chunk_size=700):
     return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
@@ -78,7 +86,11 @@ def rag_qa(question, chunks):
 pdf_path = r"test.pdf"
 
 full_text = extract_text_from_pdf(pdf_path)
+if not full_text:
+    raise ValueError("No text could be extracted from the PDF.")
+
 chunks = split_text(full_text)
+
 
 # ----------- API Route -----------
 @app.route('/ask', methods=['POST'])
