@@ -20,7 +20,6 @@ def home():
 # ----------- PDF Processing ----------
 
 def extract_text_from_pdf(pdf_path):
-    print(f"Trying to open: {pdf_path}")
     doc = fitz.open("pdf", pdf_path)
 
     text = ""
