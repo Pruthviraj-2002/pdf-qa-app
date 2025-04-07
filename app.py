@@ -1,7 +1,7 @@
 # app.py (Backend)
 
-from flask import Flask, request, jsonify, render_template
-
+from flask import Flask, request, jsonify
+from flask import Flask, render_template
 import fitz  # PyMuPDF
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
