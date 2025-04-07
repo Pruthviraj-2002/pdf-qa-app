@@ -3,3 +3,4 @@ gunicorn
 scikit-learn
 PyPDF2
 PyMuPDF
+flask_cors
