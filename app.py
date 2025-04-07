@@ -21,7 +21,8 @@ def home():
 
 def extract_text_from_pdf(pdf_path):
     print(f"Trying to open: {pdf_path}")
-    doc = fitz.open(pdf_path)
+    doc = fitz.open("static/test.pdf")
+
     text = ""
     for page in doc:
         text += page.get_text()
