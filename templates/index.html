@@ -1,57 +1,29 @@
-<!-- index.html (Frontend) -->
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>PDF QA System</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f9f9f9;
-        }
-        .container {
-            max-width: 700px;
-            margin: auto;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        input, button {
-            padding: 10px;
-            font-size: 1rem;
-            width: 100%;
-            margin-top: 10px;
-        }
-        #answer {
-            margin-top: 20px;
-            padding: 15px;
-            background: #eef;
-            border-radius: 8px;
-        }
-    </style>
+    <title>Ask PDF</title>
 </head>
 <body>
-<div class="container">
-    <h2>Ask a Question from the PDF</h2>
-    <input type="text" id="questionInput" placeholder="Type your question here..." />
-    <button onclick="askQuestion()">Ask</button>
-    <div id="answer"></div>
-</div>
+    <h1>Welcome to PDF Q&A</h1>
+    <form id="ask-form">
+        <input type="text" id="question" placeholder="Ask a question" required>
+        <button type="submit">Ask</button>
+    </form>
+    <p id="answer"></p>
 
-<script>
-    async function askQuestion() {
-        const question = document.getElementById('questionInput').value;
-        const response = await fetch('http://127.0.0.1:5000/ask', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question })
+    <script>
+        const form = document.getElementById('ask-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const question = document.getElementById('question').value;
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question })
+            });
+            const data = await response.json();
+            document.getElementById('answer').innerText = data.answer || 'No answer found.';
         });
-        const data = await response.json();
-        document.getElementById('answer').innerText = data.answer || data.error || "No answer received.";
-    }
-</script>
+    </script>
 </body>
 </html>

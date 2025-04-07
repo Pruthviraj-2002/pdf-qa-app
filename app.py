@@ -1,11 +1,14 @@
 # app.py (Backend)
 
+
 from flask import Flask, request, jsonify
 import fitz  # PyMuPDF
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import re
 from flask_cors import CORS
+from flask import render_template
+
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend communication
@@ -38,7 +41,10 @@ full_text = extract_text_from_pdf(pdf_path)
 chunks = split_text(full_text)
 
 # ----------- API Route -----------
-@app.route('/ask', methods=['POST'])
+@app.route('/')
+def home():
+    return render_template('index.html')
+
 def ask():
     data = request.json
     question = data.get('question', '')
@@ -46,6 +52,8 @@ def ask():
         return jsonify({"error": "No question provided"}), 400
     answer = rag_qa(question, chunks)
     return jsonify({"answer": answer})
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
