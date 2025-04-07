@@ -1,6 +1,7 @@
 # app.py (Backend)
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
+
 import fitz  # PyMuPDF
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -9,6 +10,10 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend communication
+@app.route("/")
+def home():
+    return render_template("index.html")
+
 
 # ----------- PDF Processing -----------
 def extract_text_from_pdf(pdf_path):
