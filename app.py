@@ -20,13 +20,7 @@ def home():
 # ----------- PDF Processing ----------
 
 def extract_text_from_pdf(pdf_path):
-    doc = fitz.open("pdf", pdf_path)
-
-    text = ""
-    for page in doc:
-        text += page.get_text()
-    return text
-
+    doc = fitz.open(pdf_path)  # ✅ Correct for a string path
 
 def split_text(text, chunk_size=700):
     return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
