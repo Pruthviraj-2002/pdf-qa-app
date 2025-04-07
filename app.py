@@ -17,11 +17,16 @@ def home():
 
 
 
-# ----------- PDF Processing -----------
+# ----------- PDF Processing ----------
+
 def extract_text_from_pdf(pdf_path):
+    print(f"Trying to open: {pdf_path}")
     doc = fitz.open(pdf_path)
-    text = " ".join([page.get_text() for page in doc])
-    return re.sub(r'\s+', ' ', text)
+    text = ""
+    for page in doc:
+        text += page.get_text()
+    return text
+
 
 def split_text(text, chunk_size=700):
     return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
@@ -84,12 +89,10 @@ chunks = split_text(full_text)
 # ----------- API Route -----------
 @app.route('/ask', methods=['POST'])
 def ask():
-    data = request.json
-    question = data.get('question', '')
-    if not question:
-        return jsonify({"error": "No question provided"}), 400
-    answer = rag_qa(question, chunks)
-    return jsonify({"answer": answer})
+    question = request.form['question']
+    print("Received question:", question)
+    return jsonify({'answer': f"You asked about: {question}"})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
