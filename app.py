@@ -8,11 +8,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 import re
 from flask_cors import CORS
 
+from flask import Flask, render_template
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend communication
+
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 
 # ----------- PDF Processing -----------
