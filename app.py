@@ -69,7 +69,8 @@ def rag_qa(question, chunks):
 
 
 # ----------- Load PDF Once -----------
-pdf_path = r"C:\Users\ralla\Desktop\pdf-qa-app\test.pdf"
+pdf_path = r"test.pdf"
+
 full_text = extract_text_from_pdf(pdf_path)
 chunks = split_text(full_text)
 
